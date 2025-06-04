@@ -1,0 +1,671 @@
+/* --------------------------------------
+   1. CSS 리셋 & 공통 설정
+-------------------------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333;
+  background-color: var(--bg-color);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+ul {
+  list-style: none;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+}
+
+/* --------------------------------------
+   2. CSS 변수 (라이트/다크 모드 토글)
+-------------------------------------- */
+:root {
+  --main-color: #2b6e4a;
+  --accent-color: #f2a65a;
+  --text-color: #333;
+  --bg-color: #ffffff;
+  --card-bg: #f7f7f7;
+  --header-bg: rgba(255, 255, 255, 0.9);
+  --overlay-color: rgba(0, 0, 0, 0.3);
+  --nav-hover: rgba(0, 0, 0, 0.1);
+}
+
+html.dark {
+  --text-color: #e0e0e0;
+  --bg-color: #1e1e1e;
+  --card-bg: #2a2a2a;
+  --header-bg: rgba(30, 30, 30, 0.9);
+  --overlay-color: rgba(0, 0, 0, 0.6);
+  --nav-hover: rgba(255, 255, 255, 0.1);
+}
+
+/* --------------------------------------
+   3. 공통 컴포넌트 스타일
+-------------------------------------- */
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.btn-primary {
+  background-color: var(--accent-color);
+  color: #ffffff;
+}
+.btn-primary:hover {
+  opacity: 0.9;
+}
+
+.btn-outline {
+  border: 2px solid var(--main-color);
+  color: var(--main-color);
+}
+.btn-outline:hover {
+  background-color: var(--main-color);
+  color: #ffffff;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -15px;
+  margin-right: -15px;
+}
+.col {
+  padding-left: 15px;
+  padding-right: 15px;
+  flex: 1 0 0%;
+}
+[class*="col-"] {
+  width: 100%;
+}
+@media (min-width: 768px) {
+  .col-4 {
+    width: 33.3333%;
+  }
+  .col-6 {
+    width: 50%;
+  }
+}
+@media (min-width: 1200px) {
+  .col-4 {
+    width: 33.3333%;
+  }
+  .col-3 {
+    width: 25%;
+  }
+  .col-6 {
+    width: 50%;
+  }
+  .col-12 {
+    width: 100%;
+  }
+}
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --------------------------------------
+   4. 헤더(Header)
+-------------------------------------- */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--header-bg);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  transition: background-color 0.3s;
+}
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 70px;
+}
+.logo {
+  display: flex;
+  align-items: center;
+}
+.logo img {
+  height: 40px;
+}
+.nav {
+  display: none;
+}
+.nav ul {
+  display: flex;
+  gap: 1.5rem;
+}
+.nav ul li a {
+  padding: 0.5rem;
+  font-weight: 500;
+}
+.nav ul li a:hover {
+  background-color: var(--nav-hover);
+  border-radius: 4px;
+}
+.header-buttons {
+  display: flex;
+  gap: 0.75rem;
+}
+.header-buttons .btn {
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+}
+
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 24px;
+  height: 18px;
+  cursor: pointer;
+}
+.hamburger span {
+  display: block;
+  height: 3px;
+  background-color: var(--text-color);
+  border-radius: 2px;
+  transition: background-color 0.3s;
+}
+
+.nav-mobile {
+  position: fixed;
+  top: 70px;
+  right: -100%;
+  width: 80%;
+  max-width: 300px;
+  height: calc(100% - 70px);
+  background-color: var(--bg-color);
+  box-shadow: -2px 0 4px rgba(0, 0, 0, 0.1);
+  transition: right 0.3s;
+  z-index: 999;
+}
+.nav-mobile.open {
+  right: 0;
+}
+.nav-mobile ul {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  gap: 1rem;
+}
+.nav-mobile ul li a {
+  font-size: 1.1rem;
+}
+
+@media (min-width: 768px) {
+  .nav {
+    display: block;
+  }
+  .hamburger {
+    display: none;
+  }
+  .nav-mobile {
+    display: none;
+  }
+}
+
+/* --------------------------------------
+   5. 히어로 섹션(Hero)
+-------------------------------------- */
+.hero {
+  position: relative;
+  height: 100vh;
+  min-height: 600px;
+  background: url("../images/hero-bg.jpg") center/cover no-repeat;
+}
+.hero::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--overlay-color);
+  pointer-events: none;
+}
+.hero .container {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #ffffff;
+}
+.hero h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.hero p.subtitle {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+.search-bar {
+  display: flex;
+  width: 100%;
+  max-width: 500px;
+  margin-bottom: 1.5rem;
+}
+.search-bar input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border-radius: 4px 0 0 4px;
+  border: none;
+  font-size: 1rem;
+}
+.search-bar button {
+  padding: 0 1rem;
+  background-color: #ffffff;
+  color: var(--main-color);
+  border-radius: 0 4px 4px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+}
+.hero .cta-buttons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.dark-toggle {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 20px;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  z-index: 2;
+}
+.dark-toggle input {
+  display: none;
+}
+.dark-toggle label {
+  cursor: pointer;
+  width: 40px;
+  height: 20px;
+  background-color: #ccc;
+  border-radius: 10px;
+  position: relative;
+  transition: background-color 0.3s;
+}
+.dark-toggle label::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  transition: transform 0.3s;
+}
+.dark-toggle input:checked + label {
+  background-color: var(--main-color);
+}
+.dark-toggle input:checked + label::after {
+  transform: translateX(20px);
+}
+
+/* --------------------------------------
+   6. 기능 소개 섹션(Features)
+-------------------------------------- */
+.features {
+  padding: 4rem 0 2rem;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+.features h2 {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+}
+.features .feature-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+}
+.feature-card {
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  padding: 1.5rem;
+  width: 100%;
+  max-width: 300px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+.feature-card i {
+  font-size: 2rem;
+  color: var(--main-color);
+  margin-bottom: 1rem;
+}
+.feature-card h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+.feature-card p {
+  font-size: 0.95rem;
+}
+
+/* --------------------------------------
+   7. 시장 목록 섹션(Market List)
+-------------------------------------- */
+.market-list {
+  padding: 4rem 0 2rem;
+  background-color: var(--card-bg);
+  color: var(--text-color);
+}
+.market-list h2 {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+}
+.market-list .search-results {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+.market-card {
+  background-color: var(--bg-color);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+}
+.market-card:hover {
+  transform: translateY(-3px);
+}
+.market-card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+}
+.market-card .market-info {
+  padding: 1rem;
+}
+.market-card .market-info h4 {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+.market-card .market-info p {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+/* --------------------------------------
+   8. 지원자 모집 섹션(Recruit)
+-------------------------------------- */
+.recruit {
+  padding: 4rem 0 2rem;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+.recruit h2 {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+.recruit .content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  align-items: center;
+}
+.recruit .content .text {
+  flex: 1 1 400px;
+}
+.recruit .content .text h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+.recruit .content .text p {
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+}
+.recruit .content .text .btn {
+  margin-top: 1rem;
+}
+.recruit .content .image {
+  flex: 1 1 300px;
+  text-align: center;
+}
+.recruit .content .image img {
+  border-radius: 8px;
+  max-width: 100%;
+}
+
+/* --------------------------------------
+   9. 고객 후기 섹션(Testimonials)
+-------------------------------------- */
+.testimonials {
+  padding: 4rem 0 2rem;
+  background-color: var(--card-bg);
+  color: var(--text-color);
+}
+.testimonials h2 {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+}
+.testimonials .slider {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+.testimonials .slides {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+.testimonials .slide {
+  min-width: 100%;
+  padding: 1rem 2rem;
+  box-sizing: border-box;
+  text-align: center;
+}
+.testimonials .slide blockquote {
+  font-size: 1rem;
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+.testimonials .slide cite {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #555;
+}
+.testimonials .slider-nav {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  transform: translateY(-50%);
+}
+.testimonials .slider-nav button {
+  background: rgba(0, 0, 0, 0.3);
+  color: #fff;
+  padding: 0.5rem;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  transition: background 0.3s;
+}
+.testimonials .slider-nav button:hover {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+/* --------------------------------------
+   10. 맞춤형 시장 지도 섹션(Market Map)
+-------------------------------------- */
+#map {
+  padding: 4rem 0 2rem;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+#map h2 {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+}
+.map-container {
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.map-container img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+.map-container a {
+  position: absolute;
+  display: block;
+}
+/* 예시 클릭 영역(퍼센트 단위) */
+.store-1 {
+  top: 20%;
+  left: 15%;
+  width: 10%;
+  height: 8%;
+}
+.store-2 {
+  top: 45%;
+  left: 50%;
+  width: 12%;
+  height: 10%;
+}
+.store-3 {
+  top: 70%;
+  left: 80%;
+  width: 8%;
+  height: 6%;
+}
+
+/* --------------------------------------
+   11. 푸터(Footer)
+-------------------------------------- */
+footer {
+  background-color: var(--main-color);
+  color: #ffffff;
+  padding: 2rem 0;
+}
+footer .footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: space-between;
+}
+footer .footer-container .col {
+  flex: 1 1 200px;
+}
+footer .footer-container h4 {
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+}
+footer .footer-container ul li {
+  margin-bottom: 0.5rem;
+}
+footer .footer-bottom {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* --------------------------------------
+   12. 반응형 추가 조정
+-------------------------------------- */
+@media (max-width: 767px) {
+  .hero h1 {
+    font-size: 2rem;
+  }
+  .hero p.subtitle {
+    font-size: 1rem;
+  }
+  .features .feature-cards {
+    flex-direction: column;
+    align-items: center;
+  }
+  .recruit .content {
+    flex-direction: column;
+  }
+  .map-container {
+    max-width: 100%;
+    padding: 0 1rem;
+  }
+  footer .footer-container {
+    flex-direction: column;
+  }
+}
